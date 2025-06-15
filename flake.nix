@@ -21,8 +21,7 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             go
-            nodejs-slim_22
-            pnpm
+            nodejs_22
           ];
           shellHook = ''
             export PATH="$PATH:$(pnpm bin)"
