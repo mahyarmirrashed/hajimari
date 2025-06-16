@@ -23,9 +23,6 @@
             go
             nodejs_22
           ];
-          shellHook = ''
-            export PATH="$PATH:$(pnpm bin)"
-          '';
         };
       }
     );
