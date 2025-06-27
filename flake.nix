@@ -20,7 +20,9 @@
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
+            air
             go
+            golangci-lint
             just
             nodejs_22
           ];
