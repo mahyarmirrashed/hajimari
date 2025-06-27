@@ -88,7 +88,7 @@ func getKubeApps() []models.AppGroup {
 
 	crdApps, err := crdAppsList.Populate(namespaces...).Get()
 	if err != nil {
-		logger.Error("An error occurred while looking for hajimari Custom Resource apps", err)
+		logger.Warn("could not find hajimari crd: ", err)
 		return nil
 	}
 
