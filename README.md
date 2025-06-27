@@ -6,7 +6,8 @@
 
 ## Hajiwhatsi?
 
-Hajimari is a simplistically beautiful startpage designed to be the entrypoint for your self-hosted Kubernetes cluster.
+Hajimari is a simplistically beautiful startpage designed to be the entrypoint
+for your self-hosted Kubernetes cluster.
 
 ![Hajimari](assets/screen01.png)
 
@@ -56,15 +57,19 @@ make dev
 
 You will need to have `go` 1.19 and `node` 18 installed.
 
-Hajimari will need access to a kubeconfig file for a service account with [access to ingress and endpoint slice](charts/hajimari/templates/rbac.yaml) objects.
+Hajimari will need access to a kubeconfig file for a service account with
+[access to ingress and endpoint slice](charts/hajimari/templates/rbac.yaml)
+objects.
 
 ## Usage
 
 ### Ingresses
 
-Hajimari looks for specific annotations on [Ingresses](https://kubernetes.io/docs/concepts/services-networking/ingress/).
+Hajimari looks for specific annotations on
+[Ingresses](https://kubernetes.io/docs/concepts/services-networking/ingress/).
 
-- Add the following annotations to your ingresses in order for it to be discovered by Hajimari:
+- Add the following annotations to your ingresses in order for it to be
+  discovered by Hajimari:
 
 | Annotation                | Description                                                                                                                                          | Required |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -79,7 +84,8 @@ Hajimari looks for specific annotations on [Ingresses](https://kubernetes.io/doc
 
 ### Config
 
-Hajimari supports the following configuration options that can be modified by either ConfigMap or `values.yaml` if you are using Helm
+Hajimari supports the following configuration options that can be modified by
+either ConfigMap or `values.yaml` if you are using Helm
 
 |         Field         |                                          Description                                           |              Default               | Type                                  |
 | :-------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------: | ------------------------------------- |
@@ -106,7 +112,13 @@ Hajimari supports the following configuration options that can be modified by ei
 
 ### HajimariApp objects
 
-It also possible to define Apps via Kubernetes [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for those using Istio's [Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/), Traefik's [IngressRoutes](https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/) or other solutions, which does not reply on native Ingress objects:
+It also possible to define Apps via Kubernetes
+[Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+for those using Istio's
+[Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/),
+Traefik's
+[IngressRoutes](https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/)
+or other solutions, which does not reply on native Ingress objects:
 
 ```yaml
 apiVersion: hajimari.io/v1alpha1
@@ -124,7 +136,8 @@ spec:
 
 #### NamespaceSelector
 
-It is a selector for selecting namespaces either selecting all namespaces or a list of namespaces, or filtering namespaces through labels.
+It is a selector for selecting namespaces either selecting all namespaces or a
+list of namespaces, or filtering namespaces through labels.
 
 |     Field     |                                          Description                                          | Default | Type                                                                                         |
 | :-----------: | :-------------------------------------------------------------------------------------------: | :-----: | -------------------------------------------------------------------------------------------- |
@@ -132,11 +145,13 @@ It is a selector for selecting namespaces either selecting all namespaces or a l
 | labelSelector |                Filter namespaces based on kubernetes metav1.LabelSelector type                |  null   | [metav1.LabelSelector](https://godoc.org/k8s.io/apimachinery/pkg/apis/meta/v1#LabelSelector) |
 |  matchNames   |                                    List of namespace names                                    |  null   | []string                                                                                     |
 
-_Note:_ If you specify both `labelSelector` and `matchNames`, Hajimari will take a union of all namespaces matched and use them.
+_Note:_ If you specify both `labelSelector` and `matchNames`, Hajimari will take
+a union of all namespaces matched and use them.
 
 #### Theme
 
-If you want to add custom themes you can provide a list of custom theme atrributes.
+If you want to add custom themes you can provide a list of custom theme
+atrributes.
 
 | Field           | Description                | Type   |
 | --------------- | -------------------------- | ------ |
@@ -147,7 +162,8 @@ If you want to add custom themes you can provide a list of custom theme atrribut
 
 #### SearchProvider
 
-If you want to add custom search providers you can provide a list of custom providers to override the defaults.
+If you want to add custom search providers you can provide a list of custom
+providers to override the defaults.
 
 | Field     | Description                                                                  | Type   |
 | --------- | ---------------------------------------------------------------------------- | ------ |
@@ -197,7 +213,9 @@ searchProviders:
 
 #### AppGroup
 
-If you want to add any apps that are not exposed through ingresses or are external to the cluster, you can use the custom apps feature. You can pass a list of custom apps inside the config.
+If you want to add any apps that are not exposed through ingresses or are
+external to the cluster, you can use the custom apps feature. You can pass a
+list of custom apps inside the config.
 
 | Field | Description                   | Type            |
 | ----- | ----------------------------- | --------------- |
@@ -218,7 +236,8 @@ Custom apps can be added by configuring a list of apps under an app group.
 
 #### BookmarkGroup
 
-Bookmark groups can be added by creating a list of groups and associated bookmarks.
+Bookmark groups can be added by creating a list of groups and associated
+bookmarks.
 
 | Field     | Description                | Type                      |
 | --------- | -------------------------- | ------------------------- |
@@ -240,26 +259,43 @@ Bookmarks can be added by configuring a list of bookmarks under a group.
 
 The search bar has a few functionalities:
 
-- If a query starts with `/` (similiar to vi/vim's search) it will filter the applications in real time allowing you to quickly find the app you're looking for.
-- If a query starts with `@<token>` and matches a token configured for a `searchProvider` then the request will be forwarded to the configured `searchUrl` with `{query}` replaced with the portion of the query after the token.
-- If no query is provided following the token or there is no `searchUrl` configured for the provider, then the user will be redirected to the contents of `url`. This allows you to use tokens to quickly access external sites.
+- If a query starts with `/` (similiar to vi/vim's search) it will filter the
+  applications in real time allowing you to quickly find the app you're looking
+  for.
+- If a query starts with `@<token>` and matches a token configured for a
+  `searchProvider` then the request will be forwarded to the configured
+  `searchUrl` with `{query}` replaced with the portion of the query after the
+  token.
+- If no query is provided following the token or there is no `searchUrl`
+  configured for the provider, then the user will be redirected to the contents
+  of `url`. This allows you to use tokens to quickly access external sites.
 
 ### Icons
 
-Any `icon` field can be either an [Iconify](https://iconify.design/) supported icon (ex: `mdi:kubernetes`, `simple-icons:google`) or a URL to an image.
+Any `icon` field can be either an [Iconify](https://iconify.design/) supported
+icon (ex: `mdi:kubernetes`, `simple-icons:google`) or a URL to an image.
 
 ### Custom startpage setup
 
-1. Open Hajimari in your browser, click the hamburger menu in the lower lefthand corner.
+1. Open Hajimari in your browser, click the hamburger menu in the lower lefthand
+   corner.
 2. Modify the options you wish to change in the built-in YAML editor.
-3. Click `Save` and you'll be redirected to your new custom page with a random ID on the URL. Set this page as your homepage/new tab page. For the best experience in Firefox I recommend the [New Tab Override](https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/) extension; for Chrome [Custom New Tab URL](https://chrome.google.com/webstore/detail/custom-new-tab-url/mmjbdbjnoablegbkcklggeknkfcjkjia).
-4. You can make further modifications to this page at anytime under the hamburger menu.
+3. Click `Save` and you'll be redirected to your new custom page with a random
+   ID on the URL. Set this page as your homepage/new tab page. For the best
+   experience in Firefox I recommend the
+   [New Tab Override](https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/)
+   extension; for Chrome
+   [Custom New Tab URL](https://chrome.google.com/webstore/detail/custom-new-tab-url/mmjbdbjnoablegbkcklggeknkfcjkjia).
+4. You can make further modifications to this page at anytime under the
+   hamburger menu.
 
-Please note there is no authentication. You might want to run this behind ingress with access restrictions.
+Please note there is no authentication. You might want to run this behind
+ingress with access restrictions.
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to
+discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
@@ -269,12 +305,15 @@ Run `make help` for information on linting, tests, etc.
 
 ### Why Hajimari?
 
-Hajimari (始まり) is Japanese for `beginnings`. Hajimari's original intended purpose is to be used as a browser startpage, so the name seemed fitting as it's the beginning of all new tabs/windows :)
+Hajimari (始まり) is Japanese for `beginnings`. Hajimari's original intended
+purpose is to be used as a browser startpage, so the name seemed fitting as it's
+the beginning of all new tabs/windows :)
 
 ## Thank you / dependencies
 
 - [SUI](https://github.com/jeroenpardon/sui) For the great startpage template
-- [Forecastle](https://github.com/stakater/Forecastle) Ideas for integrating k8s ingress
+- [Forecastle](https://github.com/stakater/Forecastle) Ideas for integrating k8s
+  ingress
 
 ## License
 
