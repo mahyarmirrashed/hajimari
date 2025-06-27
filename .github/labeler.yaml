@@ -1,4 +1,3 @@
----
 area/ansible:
   - "ansible/**/*"
 area/github:

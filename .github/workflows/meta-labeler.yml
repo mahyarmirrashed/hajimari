@@ -1,11 +1,8 @@
----
 name: Meta - Labeler
-
-on: # yamllint disable-line rule:truthy
+on:
   pull_request:
     branches:
       - main
-
 jobs:
   labeler:
     name: Labeler

@@ -1,7 +1,5 @@
----
 name: Schedule - Renovate
-
-on: # yamllint disable-line rule:truthy
+on:
   workflow_dispatch:
     inputs:
       dryRun:
@@ -20,12 +18,10 @@ on: # yamllint disable-line rule:truthy
     paths:
       - ".github/renovate.json5"
       - ".github/renovate/**.json5"
-
 env:
   LOG_LEVEL: debug
   DRY_RUN: false
   RENOVATE_CONFIG_FILE: .github/renovate.json5
-
 jobs:
   renovate:
     name: Renovate
