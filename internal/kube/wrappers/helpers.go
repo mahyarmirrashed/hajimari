@@ -1,7 +1,7 @@
 package wrappers
 
 import (
-	"github.com/toboshii/hajimari/internal/log"
+	"github.com/mahyarmirrashed/hajimari/internal/log"
 )
 
 var logger = log.New()

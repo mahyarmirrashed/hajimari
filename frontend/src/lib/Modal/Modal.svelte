@@ -147,7 +147,7 @@
 
     <footer>
         <a
-            href="https://github.com/toboshii/hajimari"
+            href="https://github.com/mahyarmirrashed/hajimari"
             target="_blank"
             rel="external noopener noreferrer"><Icon icon="mdi:github-box" /></a
         >

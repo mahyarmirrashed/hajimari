@@ -142,7 +142,7 @@ spec:
   name: Hajimari Issues
   group: info
   icon: simple-icons:github
-  url: https://github.com/toboshii/hajimari/issues
+  url: https://github.com/mahyarmirrashed/hajimari/issues
   info: Submit issues for this project
   targetBlank: true
 ```

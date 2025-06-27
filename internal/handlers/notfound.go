@@ -9,7 +9,7 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/toboshii/hajimari/frontend"
+	"github.com/mahyarmirrashed/hajimari/frontend"
 )
 
 var ErrDir = errors.New("path is dir")

@@ -6,13 +6,13 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"github.com/toboshii/hajimari/internal/config"
-	"github.com/toboshii/hajimari/internal/hajimari/crdapps"
-	"github.com/toboshii/hajimari/internal/hajimari/ingressapps"
-	"github.com/toboshii/hajimari/internal/kube"
-	"github.com/toboshii/hajimari/internal/kube/util"
-	"github.com/toboshii/hajimari/internal/log"
-	"github.com/toboshii/hajimari/internal/models"
+	"github.com/mahyarmirrashed/hajimari/internal/config"
+	"github.com/mahyarmirrashed/hajimari/internal/hajimari/crdapps"
+	"github.com/mahyarmirrashed/hajimari/internal/hajimari/ingressapps"
+	"github.com/mahyarmirrashed/hajimari/internal/kube"
+	"github.com/mahyarmirrashed/hajimari/internal/kube/util"
+	"github.com/mahyarmirrashed/hajimari/internal/log"
+	"github.com/mahyarmirrashed/hajimari/internal/models"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
