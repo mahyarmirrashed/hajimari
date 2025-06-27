@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hajimari
+  name: hajimari
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: hajimari
+  template:
+    metadata:
+      labels:
+        app: hajimari
+    spec:
+      containers:
+        - image: ghcr.io/mahyarmirrashed/hajimari:latest
+          name: hajimari
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: TZ
+              value: "America/Vancouver"
+          volumeMounts:
+            - name: hajimari-data
+              mountPath: /data
+            - name: hajimari-settings
+              mountPath: /config/config.yaml
+              subPath: config.yaml
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      volumes:
+        - name: hajimari-data
+          persistentVolumeClaim:
+            claimName: hajimari
+        - name: hajimari-settings
+          configMap:
+            name: hajimari-settings
+      serviceAccountName: hajimari

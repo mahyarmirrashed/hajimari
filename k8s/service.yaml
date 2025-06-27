@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hajimari
+  name: hajimari
+spec:
+  ports:
+    - name: 80-http
+      port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: hajimari
+  type: ClusterIP

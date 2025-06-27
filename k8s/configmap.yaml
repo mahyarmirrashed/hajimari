@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hajimari-settings
+data:
+  config.yaml: |-
+    customApps: []
+    lightTheme: gruvbox-light
+    darkTheme: gruvbox-dark
+    customThemes:
+      - name: gruvbox-dark
+        backgroundColor: '#282828'
+        primaryColor: '#98971a'
+        accentColor: '#458588'
+      - name: gruvbox-light
+        backgroundColor: '#fbf1c7'
+        primaryColor: '#98971a'
+        accentColor: '#458588'
+    defaultEnable: false
+    defaultSearchProvider: Google
+    searchProviders:
+      - name: Google
+        token: g
+        icon: simple-icons:google
+        searchUrl: https://www.google.com/search?q={query}
+        url: https://www.google.com
+      - name: DuckDuckGo
+        token: d
+        icon: simple-icons:duckduckgo
+        searchUrl: https://duckduckgo.com/?q={query}
+        url: https://duckduckgo.com
+      - name: Reddit
+        token: r
+        icon: simple-icons:reddit
+        searchUrl: https://www.reddit.com/search?q={query}
+        url: https://www.reddit.com
+      - name: YouTube
+        token: y
+        icon: simple-icons:youtube
+        searchUrl: https://www.youtube.com/results?search_query={query}
+        url: https://www.youtube.com
+      - name: Spotify
+        token: s
+        icon: simple-icons:spotify
+        searchUrl: https://open.spotify.com/search/{query}
+        url: https://open.spotify.com
+      - name: GitHub
+        token: c
+        icon: simple-icons:github
+        searchUrl: https://github.com/search?q={query}
+        url: https://github.com
+      - name: Perplexity
+        token: p
+        icon: simple-icons:perplexity
+        searchUrl: https://www.perplexity.ai/search?q={query}
+        url: https://www.perplexity.ai
+    globalBookmarks:
+      - group: Entertainment
+        bookmarks:
+          - name: YouTube
+            icon: simple-icons:youtube
+            url: https://www.youtube.com
+      - group: Cooking
+        bookmarks:
+          - name: Love & Lemons
+            icon: tabler:lemon
+            url: https://www.loveandlemons.com
+      - group: Reading
+        bookmarks:
+          - name: Asterisk
+            icon: tabler:asterisk
+            url: https://asteriskmag.com
+      - group: Miscellaneous
+        bookmarks:
+          - name: Self Hosting Apps
+            icon: tabler:apps
+            url: https://selfh.st/apps
+    instanceName: null
+    name: Hacker
+    namespaceSelector:
+      any: true
+    title: 'Nothing is Wrong'

@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hajimari
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: home.yourwebsite.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: hajimari
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+    - host: hajimari.home.yourwebsite.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: hajimari
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - home.yourwebsite.com
+        - hajimari.home.yourwebsite.com
+      secretName: hajimari
