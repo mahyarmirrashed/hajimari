@@ -2,6 +2,7 @@ package kube
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/mahyarmirrashed/hajimari/internal/log"
 	"k8s.io/client-go/dynamic"
@@ -17,7 +18,7 @@ func getConfig() *rest.Config {
 
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		logger.Error("Could not load in-cluster config")
+		logger.Warn("Could not load in-cluster config")
 	}
 
 	if err == nil {
@@ -26,7 +27,7 @@ func getConfig() *rest.Config {
 
 	configPath := os.Getenv("KUBECONFIG")
 	if configPath == "" {
-		configPath = os.Getenv("HOME") + "/.kube/config"
+		configPath = filepath.Join(os.Getenv("HOME"), ".kube", "config")
 	}
 	config, _ = clientcmd.BuildConfigFromFlags("", configPath)
 
