@@ -9,10 +9,10 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
-	"github.com/spf13/viper"
 	"github.com/mahyarmirrashed/hajimari/internal/log"
 	"github.com/mahyarmirrashed/hajimari/internal/services"
 	"github.com/mahyarmirrashed/hajimari/internal/stores"
+	"github.com/spf13/viper"
 )
 
 var logger = log.New()

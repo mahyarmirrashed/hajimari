@@ -5,7 +5,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/mahyarmirrashed/hajimari/internal/config"
 	"github.com/mahyarmirrashed/hajimari/internal/hajimari/crdapps"
 	"github.com/mahyarmirrashed/hajimari/internal/hajimari/ingressapps"
@@ -13,6 +12,7 @@ import (
 	"github.com/mahyarmirrashed/hajimari/internal/kube/util"
 	"github.com/mahyarmirrashed/hajimari/internal/log"
 	"github.com/mahyarmirrashed/hajimari/internal/models"
+	"github.com/sirupsen/logrus"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

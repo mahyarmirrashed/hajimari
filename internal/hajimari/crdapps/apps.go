@@ -1,7 +1,6 @@
 package crdapps
 
 import (
-	"github.com/mitchellh/mapstructure"
 	"github.com/mahyarmirrashed/hajimari/internal/annotations"
 	"github.com/mahyarmirrashed/hajimari/internal/config"
 	"github.com/mahyarmirrashed/hajimari/internal/kube/lists/crdapps"
@@ -9,6 +8,7 @@ import (
 	"github.com/mahyarmirrashed/hajimari/internal/kube/wrappers"
 	"github.com/mahyarmirrashed/hajimari/internal/log"
 	"github.com/mahyarmirrashed/hajimari/internal/models"
+	"github.com/mitchellh/mapstructure"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/client-go/dynamic"
 )

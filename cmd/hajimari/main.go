@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
 	"github.com/mahyarmirrashed/hajimari/internal/config"
 	"github.com/mahyarmirrashed/hajimari/internal/handlers"
 	"github.com/mahyarmirrashed/hajimari/internal/log"
+	"github.com/spf13/viper"
 )
 
 var logger = log.New()

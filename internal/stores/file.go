@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	gonanoid "github.com/matoous/go-nanoid/v2"
 	"github.com/mahyarmirrashed/hajimari/internal/models"
+	gonanoid "github.com/matoous/go-nanoid/v2"
 	"gopkg.in/yaml.v3"
 )
 

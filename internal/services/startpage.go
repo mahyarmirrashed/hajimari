@@ -3,10 +3,10 @@ package services
 import (
 	"encoding/json"
 
-	"github.com/sirupsen/logrus"
 	"github.com/mahyarmirrashed/hajimari/internal/config"
 	"github.com/mahyarmirrashed/hajimari/internal/models"
 	"github.com/mahyarmirrashed/hajimari/internal/stores"
+	"github.com/sirupsen/logrus"
 )
 
 type StartpageService interface {

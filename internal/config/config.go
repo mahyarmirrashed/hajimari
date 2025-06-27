@@ -3,8 +3,8 @@ package config
 import (
 	"time"
 
-	"github.com/spf13/viper"
 	"github.com/mahyarmirrashed/hajimari/internal/models"
+	"github.com/spf13/viper"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
