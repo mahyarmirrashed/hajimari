@@ -23,7 +23,6 @@ func NewList(appConfig config.Config) *List {
 
 // Populate function that populates a list of custom apps
 func (al *List) Populate() *List {
-
 	var customApps []models.AppGroup
 
 	for _, group := range al.appConfig.CustomApps {

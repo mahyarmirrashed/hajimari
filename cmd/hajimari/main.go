@@ -11,9 +11,7 @@ import (
 	"github.com/toboshii/hajimari/internal/log"
 )
 
-var (
-	logger = log.New()
-)
+var logger = log.New()
 
 func init() {
 	viper.SetConfigName("config")          // name of config file (without extension)
@@ -23,8 +21,7 @@ func init() {
 	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig() // Find and read the config file
-
-	if err != nil { // Handle errors reading the config file
+	if err != nil {             // Handle errors reading the config file
 		panic(errors.New("Fatal error config file: " + err.Error()))
 	}
 
@@ -40,7 +37,6 @@ func init() {
 }
 
 func main() {
-
 	// appConfig, err := config.GetConfig()
 	// if err != nil {
 	// 	logger.Fatal("Failed to read configuration for hajimari", err)

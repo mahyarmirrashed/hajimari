@@ -36,7 +36,6 @@ func (rs *bookmarkResource) ListBookmarks(w http.ResponseWriter, r *http.Request
 		render.Render(w, r, ErrServerError(err))
 		return
 	}
-
 }
 
 type BookmarkResponse struct {

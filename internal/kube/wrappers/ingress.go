@@ -78,7 +78,6 @@ func (iw *IngressWrapper) GetTargetBlank() bool {
 
 // GetURL func extracts url of the ingress wrapped by the object
 func (iw *IngressWrapper) GetURL() string {
-
 	if urlFromAnnotation := iw.GetAnnotationValue(annotations.HajimariURLAnnotation); urlFromAnnotation != "" {
 		parsedURL, err := url.ParseRequestURI(urlFromAnnotation)
 		if err != nil {

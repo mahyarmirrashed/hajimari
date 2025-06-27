@@ -14,9 +14,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-var (
-	logger = log.New()
-)
+var logger = log.New()
 
 // List struct is used for listing hajimari apps
 type List struct {

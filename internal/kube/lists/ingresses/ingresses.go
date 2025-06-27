@@ -44,7 +44,6 @@ func (il *List) Populate(namespaces ...string) *List {
 
 // Filter function applies a filter func that is passed as a parameter to the list of ingresses
 func (il *List) Filter(filterFunc FilterFunc) *List {
-
 	var filtered []v1.Ingress
 
 	for _, ingress := range il.items {

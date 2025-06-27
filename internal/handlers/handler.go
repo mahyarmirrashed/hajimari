@@ -15,9 +15,7 @@ import (
 	"github.com/toboshii/hajimari/internal/stores"
 )
 
-var (
-	logger = log.New()
-)
+var logger = log.New()
 
 func NewHandler() http.Handler {
 	router := chi.NewRouter()

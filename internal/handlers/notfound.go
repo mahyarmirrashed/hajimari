@@ -34,7 +34,6 @@ func tryRead(fs embed.FS, prefix, requestedPath string, w http.ResponseWriter) e
 }
 
 func notFoundHandler(w http.ResponseWriter, r *http.Request) {
-
 	err := tryRead(frontend.BuildFs, "build", r.URL.Path, w)
 	if err == nil {
 		return

@@ -50,7 +50,6 @@ func (rsg *ReplicaStatusGetter) GetEndpointStatuses(ingress networkingV1.Ingress
 	labelOptions.LabelSelector = labels.NewSelector().Add(*labelRequirements).String()
 
 	epslices, err := rsg.kubeClient.DiscoveryV1().EndpointSlices(namespace).List(context.Background(), labelOptions)
-
 	if err != nil {
 		logger.Error("Error Getting EndpointSlices: ", err)
 		rsg.err = err

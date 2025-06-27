@@ -10,9 +10,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var (
-	logger = log.New()
-)
+var logger = log.New()
 
 func getConfig() *rest.Config {
 	var config *rest.Config

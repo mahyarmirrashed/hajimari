@@ -38,7 +38,7 @@ func (rs *appResource) ListApps(w http.ResponseWriter, r *http.Request) {
 
 	cachedKubeApps := rs.service.GetCachedKubeApps()
 
-	var kubeApps = make([]models.AppGroup, len(cachedKubeApps))
+	kubeApps := make([]models.AppGroup, len(cachedKubeApps))
 
 	copy(kubeApps, cachedKubeApps)
 
@@ -71,7 +71,6 @@ func (rs *appResource) ListApps(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, ErrServerError(err))
 		return
 	}
-
 }
 
 type AppResponse struct {
