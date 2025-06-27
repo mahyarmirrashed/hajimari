@@ -1,47 +1,64 @@
-<img src="assets/logo.png" align="left" width="144px"/>
-
 # Hajimari 🌅
 
-...The beginning of a pleasant experience
-
-## Hajiwhatsi?
-
-Hajimari is a simplistically beautiful startpage designed to be the entrypoint
-for your self-hosted Kubernetes cluster.
+Hajimari is a sleek and intuitive start page for your Kubernetes cluster. It
+dynamically discovers and organizes applications, supports personalized
+configurations, and integrates with Kubernetes resources for a streamlined
+interface.
 
 ![Hajimari](assets/screen01.png)
 
-![User config](assets/screen02.png)
+![User Configuration](assets/screen02.png)
 
-![App groups](assets/screen03.png)
+![App Groups](assets/screen03.png)
 
 ## Features
 
-- Web and app search with customizable search providers
-- Dynamically list apps discovered from Kubernetes Ingresses or Custom Resources
-- Display replica status for ingress endpoints
-- Support for non-Kubernetes apps via custom apps config
-- Customizable list of bookmarks
-- Selectable themes and custom theme support
-- Automatic light/dark mode
-- Custom configuration overrides per user/browser
-- Multiple instance support
+- **Search Functionality**: Web and application search with customizable search
+  providers.
+- **Dynamic Application** Discovery: Automatically lists applications from
+  Kubernetes Ingresses or Custom Resources.
+- **Replica Status Monitoring**: Displays real-time replica status for ingress
+  endpoints.
+- **Custom App Support**: Add non-Kubernetes applications via configuration.
+- **Bookmark Management**: Organize and customize bookmark lists.
+- **Theming Options**: Choose from selectable themes or create custom themes
+  with automatic light/dark mode support.
+- **User Customization**: Per-user or per-browser configuration overrides.
+- **Multi-Instance Support**: Run multiple Hajimari instances with targeted
+  application displays.
 
 ## Installation
 
 ### Helm
 
-`helm repo add hajimari https://hajimari.io`
+1. Add the Hajimari Helm repository:
 
-`helm repo update`
+```bash
+helm repo add hajimari https://hajimari.io
+```
 
-`helm install hajimari hajimari/hajimari`
+2. Update the Helm repository:
 
-[Helm docs](charts/hajimari)
+```bash
+helm repo update
+```
+
+3. Install Hajimari:
+
+```bash
+helm install hajimari hajimari/hajimari
+```
+
+For detailed Helm chart configuration, refer to the
+[Helm documentation](charts/hajimari).
+
+### Kustomize
+
+Refer to the [k8s](./k8s) folder for resources needed for Kustomize.
 
 ### Locally
 
-Clone the repo and run the following command to generate the `hajimari` binary:
+To build Hajimari locally, clone the repository and run:
 
 ```bash
 make deps
@@ -55,70 +72,66 @@ make deps
 make dev
 ```
 
-You will need to have `go` 1.19 and `node` 18 installed.
+**Requirements**
 
-Hajimari will need access to a kubeconfig file for a service account with
-[access to ingress and endpoint slice](charts/hajimari/templates/rbac.yaml)
-objects.
+- Go 1.19
+- Node.js 18
 
-## Usage
+> [!NOTE]
+>
+> Hajimari requires access to a kubeconfig file for a service account with
+> permissions to access `Ingress` and `EndpointSlice` objects.
 
-### Ingresses
+## Configuration
 
-Hajimari looks for specific annotations on
-[Ingresses](https://kubernetes.io/docs/concepts/services-networking/ingress/).
+### Kubernetes Ingresses
 
-- Add the following annotations to your ingresses in order for it to be
-  discovered by Hajimari:
+Hajimari discovers applications by reading specific annotations on Kubernetes
+Ingresses. Add the following annotations to your Ingress resources:
 
-| Annotation                | Description                                                                                                                                          | Required |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `hajimari.io/enable`      | Add this with value `true` to the ingress of the app you want to show in Hajimari                                                                    | `true`   |
-| `hajimari.io/icon`        | Icon name from [MDI icons](https://materialdesignicons.com/)                                                                                         | `false`  |
-| `hajimari.io/appName`     | A custom name for your application. Use if you don't want to use the name of the ingress                                                             | `false`  |
-| `hajimari.io/group`       | A custom group name. Use if you want the application to show in a different group than the namespace it is running in                                | `false`  |
-| `hajimari.io/instance`    | A comma separated list of name/s of the Hajimari instance/s where you want this application to appear. Use when you have multiple Hajimari instances | `false`  |
-| `hajimari.io/url`         | A URL for the Hajimari app (This will override the ingress URL). It MUST begin with a scheme i.e., `http://` or `https://`                           | `false`  |
-| `hajimari.io/targetBlank` | Determines if links should open in new tabs/windows                                                                                                  | `false`  |
-| `hajimari.io/info`        | A short description of the Hajimari app                                                                                                              | `false`  |
+| Annotation                | Description                                                                | Required |
+| ------------------------- | -------------------------------------------------------------------------- | -------- |
+| `hajimari.io/enable`      | Set to `true` to display the application in Hajimari.                      | Yes      |
+| `hajimari.io/icon`        | Icon name from Material Design Icons.                                      | No       |
+| `hajimari.io/appName`     | Custom application name (overrides Ingress name).                          | No       |
+| `hajimari.io/group`       | Custom group name (overrides namespace-based grouping).                    | No       |
+| `hajimari.io/instance`    | Comma-separated list of Hajimari instance names for multi-instance setups. | No       |
+| `hajimari.io/url`         | Custom URL for the application (must include `http://` or `https://`).     | No       |
+| `hajimari.io/targetBlank` | Set to `true` to open links in a new tab/window.                           | No       |
+| `hajimari.io/info`        | Short description of the application.                                      | No       |
 
-### Config
+### Configuration Options
 
-Hajimari supports the following configuration options that can be modified by
-either ConfigMap or `values.yaml` if you are using Helm
+Hajimari supports configuration via `ConfigMap` or `values.yaml` (for Helm).
+Below are the available options:
 
-|         Field         |                                          Description                                           |              Default               | Type                                  |
-| :-------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------: | ------------------------------------- |
-|     instanceName      |                                 Name of the Hajimari instance                                  |                 ""                 | string                                |
-|     defaultEnable     |             Set to true to expose all ingresses in selected namespaces by default              |               false                | bool                                  |
-|   namespaceSelector   | Namespace selector which uses a combination of hardcoded namespaces as well as label selectors |             any: true              | NamespaceSelector                     |
-|         name          |                                  Name to use in the greeting                                   |               "You"                | string                                |
-|         title         |                            Browser title for this Hajimari instance                            |             "Hajimari"             | string                                |
-|      lightTheme       |                       Theme to use when the browser prefers light themes                       |             "gazette"              | string                                |
-|       darkTheme       |                       Theme to use when the brwoser prefers dark themes                        |             "horizon"              | string                                |
-|     customThemes      |                                    A list of custom themes                                     |                 []                 | \[\][Theme](#theme)                   |
-|     showGreeting      |                              Toggle showing the greeting and date                              |                true                | bool                                  |
-|     showAppGroups     |                           Toggle grouping apps by group (namespaces)                           |                true                | bool                                  |
-|      showAppUrls      |                                   Toggle displaying app URLs                                   |                true                | bool                                  |
-|      showAppInfo      |                                    Toggle showing app info                                     |               false                | bool                                  |
-|     showAppStatus     |                          Toggle showing app replica status indicators                          |                true                | bool                                  |
-|  showBookmarkGroups   |                               Toggle grouping bookmarks by group                               |                true                | bool                                  |
-|  showGlobalBookmarks  |                      Toggle showing global bookmarks on custom startpages                      |               false                | bool                                  |
-|   alwaysTargetBlank   |                 Set to true to open apps/bookmarks in a new window by default                  |               false                | bool                                  |
-| defaultSearchProvider |                   `name` of the configured search provider to use as default                   |              "Google"              | string                                |
-|    searchProviders    |                               A list of custom search providers                                | [[...](#default-search-providers)] | \[\][SearchProvider](#searchprovider) |
-|      customApps       |                      A list of custom apps to add to the discovered apps                       |                 []                 | \[\][AppGroup](#appgroup)             |
-|    globalBookmarks    |                                A list of bookmark groups to add                                |                 []                 | \[\][BookmarkGroup](#bookmarkgroup)   |
+| Field                   | Description                                             | Default      | Type                |
+| ----------------------- | ------------------------------------------------------- | ------------ | ------------------- |
+| `instanceName`          | Name of the Hajimari instance.                          | `""`         | `String`            |
+| `defaultEnable`         | Expose all Ingresses in selected namespaces by default. | `false`      | `Bool`              |
+| `namespaceSelector`     | Select namespaces using names or label selectors.       | `any: true`  | `NamespaceSelector` |
+| `name`                  | Name used in the greeting.                              | `"You"`      | `String`            |
+| `title`                 | Browser title for the instance.                         | `"Hajimari"` | `String`            |
+| `lightTheme`            | Theme for light mode.                                   | `"gazette"`  | `String`            |
+| `darkTheme`             | Theme for dark mode.                                    | `"horizon"`  | `String`            |
+| `customThemes`          | List of custom themes.                                  | `[]`         | `[]Theme`           |
+| `showGreeting`          | Toggle greeting and date display.                       | `true`       | `Bool`              |
+| `showAppGroups`         | Group applications by namespace.                        | `true`       | `Bool`              |
+| `showAppUrls`           | Display application URLs.                               | `true`       | `Bool`              |
+| `showAppInfo`           | Show application descriptions.                          | `false`      | `Bool`              |
+| `showAppStatus`         | Display replica status indicators.                      | `true`       | `Bool`              |
+| `showBookmarkGroups`    | Group bookmarks by category.                            | `true`       | `Bool`              |
+| `showGlobalBookmarks`   | Show global bookmarks on custom start pages.            | `false`      | `Bool`              |
+| `alwaysTargetBlank`     | Open apps/bookmarks in a new tab by default.            | `false`      | `Bool`              |
+| `defaultSearchProvider` | Default search provider name.                           | `"Google"`   | `String`            |
+| `searchProviders`       | List of custom search providers.                        | See below    | `[]SearchProvider`  |
+| `customApps`            | List of custom applications.                            | `[]`         | `[]AppGroup`        |
+| `globalBookmarks`       | List of bookmark groups.                                | `[]`         | `[]BookmarkGroup`   |
 
-### HajimariApp objects
+### Custom Resources (HajimariApp)
 
-It also possible to define Apps via Kubernetes
-[Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-for those using Istio's
-[Virtual Services](https://istio.io/latest/docs/reference/config/networking/virtual-service/),
-Traefik's
-[IngressRoutes](https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/)
-or other solutions, which does not reply on native Ingress objects:
+For non-Ingress setups (e.g., Istio Virtual Services or Traefik
+`IngressRoutes`), define applications using Kubernetes Custom Resources:
 
 ```yaml
 apiVersion: hajimari.io/v1alpha1
@@ -130,52 +143,49 @@ spec:
   group: info
   icon: simple-icons:github
   url: https://github.com/toboshii/hajimari/issues
-  info: Submit issue to this project
+  info: Submit issues for this project
   targetBlank: true
 ```
 
-#### NamespaceSelector
+### Namespace Selector
 
-It is a selector for selecting namespaces either selecting all namespaces or a
-list of namespaces, or filtering namespaces through labels.
+The `namespaceSelector` field controls which namespaces Hajimari monitors:
 
-|     Field     |                                          Description                                          | Default | Type                                                                                         |
-| :-----------: | :-------------------------------------------------------------------------------------------: | :-----: | -------------------------------------------------------------------------------------------- |
-|      any      | Boolean describing whether all namespaces are selected in contrast to a list restricting them |  false  | bool                                                                                         |
-| labelSelector |                Filter namespaces based on kubernetes metav1.LabelSelector type                |  null   | [metav1.LabelSelector](https://godoc.org/k8s.io/apimachinery/pkg/apis/meta/v1#LabelSelector) |
-|  matchNames   |                                    List of namespace names                                    |  null   | []string                                                                                     |
+| Field           | Description                                                  | Default | Type                   |
+| --------------- | ------------------------------------------------------------ | ------- | ---------------------- |
+| `any`           | Select all namespaces if `true`.                             | `false` | `Bool`                 |
+| `labelSelector` | Filter namespaces using a Kubernetes `metav1.LabelSelector`. | `null`  | `metav1.LabelSelector` |
+| `matchNames`    | List of specific namespace names.                            | `null`  | `[]String`             |
 
-_Note:_ If you specify both `labelSelector` and `matchNames`, Hajimari will take
-a union of all namespaces matched and use them.
+> [!NOTE]
+>
+> Combining `labelSelector` and `matchNames` results in a union of matched
+> namespaces.
 
-#### Theme
+### Custom Themes
 
-If you want to add custom themes you can provide a list of custom theme
-atrributes.
+Define custom themes with the following attributes:
 
-| Field           | Description                | Type   |
-| --------------- | -------------------------- | ------ |
-| name            | Name of the theme          | String |
-| backgroundColor | Background color hex value | String |
-| primaryColor    | Primary color hex value    | String |
-| accentColor     | Accent color hex value     | String |
+| Field             | Description             | Type     |
+| ----------------- | ----------------------- | -------- |
+| `name`            | Theme name.             | `String` |
+| `backgroundColor` | Background color (hex). | `String` |
+| `primaryColor`    | Primary color (hex).    | `String` |
+| `accentColor`     | Accent color (hex).     | `String` |
 
-#### SearchProvider
+### Search Providers
 
-If you want to add custom search providers you can provide a list of custom
-providers to override the defaults.
+Customize search providers to override defaults:
 
-| Field     | Description                                                                  | Type   |
-| --------- | ---------------------------------------------------------------------------- | ------ |
-| name      | Name of the search provider                                                  | String |
-| token     | Short token used to activate this provider in the search bar                 | String |
-| icon      | Icon name or URL to use for this search provider                             | String |
-| searchUrl | URL to use for searches, the token `{query}` will be replaced with the query | String |
-| url       | URL to use when only `token` is entered in search bar                        | String |
+| Field       | Description                                                 | Type     |
+| ----------- | ----------------------------------------------------------- | -------- |
+| `name`      | Search provider name.                                       | `String` |
+| `token`     | Token to activate the provider in the search bar.           | `String` |
+| `icon`      | Icon name or URL for the provider.                          | `String` |
+| `searchUrl` | Search URL with `{query}` placeholder for the query string. | `String` |
+| `url`       | URL to redirect to when only the token is entered.          | `String` |
 
-##### Default Search Providers
-
-`searchProviders` defaults to the following values:
+#### Default Search Providers
 
 ```yaml
 searchProviders:
@@ -200,120 +210,108 @@ searchProviders:
     searchUrl: https://www.reddit.com/search?q={query}
     url: https://www.reddit.com
   - name: YouTube
-    token: "y"
+    token: y
     icon: simple-icons:youtube
     searchUrl: https://www.youtube.com/results?search_query={query}
     url: https://www.youtube.com
   - name: Spotify
     token: s
     icon: simple-icons:spotify
-    searchUrl: hhttps://open.spotify.com/search/{query}
+    searchUrl: https://open.spotify.com/search/{query}
     url: https://open.spotify.com
 ```
 
-#### AppGroup
+### Custom Apps
 
-If you want to add any apps that are not exposed through ingresses or are
-external to the cluster, you can use the custom apps feature. You can pass a
-list of custom apps inside the config.
+Add external or non-Ingress applications via the `customApps` configuration:
 
-| Field | Description                   | Type            |
-| ----- | ----------------------------- | --------------- |
-| group | Name of the group (namespace) | String          |
-| apps  | A list of custom apps         | \[\][App](#app) |
+| Field   | Description                   | Type     |
+| ------- | ----------------------------- | -------- |
+| `group` | Group name (e.g., namespace). | `String` |
+| `apps`  | List of custom applications.  | `[]App`  |
 
-##### App
+#### App
 
-Custom apps can be added by configuring a list of apps under an app group.
+| Field         | Description               | Type     |
+| ------------- | ------------------------- | -------- |
+| `name`        | Application name.         | `String` |
+| `icon`        | Icon name or URL.         | `String` |
+| `url`         | Application URL.          | `String` |
+| `info`        | Short description.        | `String` |
+| `targetBlank` | Open in a new tab/window. | `Bool`   |
 
-| Field       | Description                         | Type   |
-| ----------- | ----------------------------------- | ------ |
-| name        | Name of the custom app              | String |
-| icon        | Icon name or URL for the custom app | String |
-| url         | URL of the custom app               | String |
-| info        | Short description of the custom app | String |
-| targetBlank | Open app in a new window/tab        | Bool   |
+### Bookmark Groups
 
-#### BookmarkGroup
+Organize bookmarks with the following structure:
 
-Bookmark groups can be added by creating a list of groups and associated
-bookmarks.
+| Field       | Description          | Type         |
+| ----------- | -------------------- | ------------ |
+| `group`     | Bookmark group name. | `String`     |
+| `bookmarks` | List of bookmarks.   | `[]Bookmark` |
 
-| Field     | Description                | Type                      |
-| --------- | -------------------------- | ------------------------- |
-| group     | Name of the bookmark group | String                    |
-| bookmarks | Array of bookmarks         | \[\][Bookmark](#bookmark) |
+#### Bookmark
 
-Bookmarks can be added by configuring a list of bookmarks under a group.
+| Field         | Description               | Type     |
+| ------------- | ------------------------- | -------- |
+| `name`        | Bookmark name.            | `String` |
+| `icon`        | Icon name or URL.         | `String` |
+| `url`         | Bookmark URL.             | `String` |
+| `targetBlank` | Open in a new tab/window. | `Bool`   |
 
-##### Bookmark
+## Usage
 
-| Field       | Description                       | Type   |
-| ----------- | --------------------------------- | ------ |
-| name        | Name of the bookmark              | String |
-| icon        | Icon name or URL for the bookmark | String |
-| url         | URL of the bookmark               | String |
-| targetBlank | Open bookmark in a new window/tab | Bool   |
+### Search Functionality
 
-### Search
+The search bar supports:
 
-The search bar has a few functionalities:
-
-- If a query starts with `/` (similiar to vi/vim's search) it will filter the
-  applications in real time allowing you to quickly find the app you're looking
-  for.
-- If a query starts with `@<token>` and matches a token configured for a
-  `searchProvider` then the request will be forwarded to the configured
-  `searchUrl` with `{query}` replaced with the portion of the query after the
-  token.
-- If no query is provided following the token or there is no `searchUrl`
-  configured for the provider, then the user will be redirected to the contents
-  of `url`. This allows you to use tokens to quickly access external sites.
+- **Application Filtering**: Use `/` to filter applications in real-time.
+- **Custom Search Providers**: Start queries with `@<token>` to trigger a
+  provider’s `searchUrl` with the query replacing `{query}`.
+- **Quick Access**: Enter only `@<token>` to redirect to the provider’s `url`.
 
 ### Icons
 
-Any `icon` field can be either an [Iconify](https://iconify.design/) supported
-icon (ex: `mdi:kubernetes`, `simple-icons:google`) or a URL to an image.
+Use Iconify icons (e.g., `mdi:kubernetes`, `simple-icons:google`) or provide a
+direct image URL for any `icon` field.
 
-### Custom startpage setup
+### Custom Start page Setup
 
-1. Open Hajimari in your browser, click the hamburger menu in the lower lefthand
-   corner.
-2. Modify the options you wish to change in the built-in YAML editor.
-3. Click `Save` and you'll be redirected to your new custom page with a random
-   ID on the URL. Set this page as your homepage/new tab page. For the best
-   experience in Firefox I recommend the
-   [New Tab Override](https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/)
-   extension; for Chrome
-   [Custom New Tab URL](https://chrome.google.com/webstore/detail/custom-new-tab-url/mmjbdbjnoablegbkcklggeknkfcjkjia).
-4. You can make further modifications to this page at anytime under the
-   hamburger menu.
+1. Open Hajimari in your browser and click the hamburger menu (bottom left).
+2. Edit settings in the built-in YAML editor.
+3. Save to generate a custom start page with a unique URL ID.
+4. Set this URL as your browser’s homepage or new tab page. Recommended
+   extensions:
+   - Firefox: New Tab Override
+   - Chrome: Custom New Tab URL
 
-Please note there is no authentication. You might want to run this behind
-ingress with access restrictions.
+> [!NOTE]
+>
+> Hajimari does not include authentication. Consider restricting access via an
+> `Ingress` controller.
+
+> [!NOTE]
+>
+> Hajimari does not auto-update when configuration map is changed. It is
+> recommended to use the [Reload Operator](https://github.com/stakater/Reloader)
+> to automatically restart the Hajimari deployment when the configuration map
+> changes.
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to
-discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-Run `make help` for information on linting, tests, etc.
+We welcome contributions! For significant changes, please open an issue to
+discuss your proposal. Ensure tests are updated as needed. Run `make help` for
+details on linting, testing, and other tasks.
 
 ## About
 
-### Why Hajimari?
+Hajimari (始まり), meaning "beginnings" in Japanese, is designed as a browser
+start page, making it the perfect entry point for your Kubernetes cluster.
 
-Hajimari (始まり) is Japanese for `beginnings`. Hajimari's original intended
-purpose is to be used as a browser startpage, so the name seemed fitting as it's
-the beginning of all new tabs/windows :)
+### Acknowledgments
 
-## Thank you / dependencies
-
-- [SUI](https://github.com/jeroenpardon/sui) For the great startpage template
-- [Forecastle](https://github.com/stakater/Forecastle) Ideas for integrating k8s
-  ingress
+- [SUI](https://github.com/jeroenpardon/sui) For the great start page template.
+- [Forecastle](https://github.com/stakater/Forecastle) Ideas for integrating K8s
+  ingress.
 
 ## License
 
