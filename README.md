@@ -61,15 +61,15 @@ Refer to the [k8s](./k8s) folder for resources needed for Kustomize.
 To build Hajimari locally, clone the repository and run:
 
 ```bash
-make deps
-make build
+just deps
+just build
 ```
 
 Or for local development with hot reload:
 
 ```bash
-make deps
-make dev
+just deps
+just dev
 ```
 
 **Requirements**
@@ -299,7 +299,7 @@ direct image URL for any `icon` field.
 ## Contributing
 
 We welcome contributions! For significant changes, please open an issue to
-discuss your proposal. Ensure tests are updated as needed. Run `make help` for
+discuss your proposal. Ensure tests are updated as needed. Run `just --list` for
 details on linting, testing, and other tasks.
 
 ## About

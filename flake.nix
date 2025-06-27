@@ -21,6 +21,7 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             go
+            just
             nodejs_22
           ];
         };
