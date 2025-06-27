@@ -2,6 +2,7 @@ package crdapps
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/mahyarmirrashed/hajimari/internal/config"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -35,6 +36,11 @@ func NewList(dynClient dynamic.Interface, appConfig config.Config, items ...unst
 
 // Populate function returns a list of ingresses
 func (il *List) Populate(namespaces ...string) *List {
+	if il.dynClient == nil {
+		il.err = fmt.Errorf("dynamic Kubernetes client is nil")
+		return il
+	}
+
 	for _, namespace := range namespaces {
 		apps, err := il.dynClient.
 			Resource(appResource).
@@ -42,6 +48,7 @@ func (il *List) Populate(namespaces ...string) *List {
 			List(context.Background(), metav1.ListOptions{})
 		if err != nil {
 			il.err = err
+			return il
 		}
 		il.items = append(il.items, apps.Items...)
 	}
