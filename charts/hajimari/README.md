@@ -179,7 +179,7 @@ Kubernetes: `>=1.16.0-0`
 
 | Key                        | Type   | Default                              | Description                                                                                       |
 | -------------------------- | ------ | ------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| env                        | object | See below                            | environment variables.                                                                            |
+| env                        | object | See below                            | Environment variables.                                                                            |
 | env.TZ                     | string | `"UTC"`                              | Set the container timezone                                                                        |
 | hajimari                   | object | See below                            | Configures Hajimari settings for this instance.                                                   |
 | hajimari.customApps        | list   | `[]`                                 | Add custom applications to the discovered application list                                        |
@@ -189,9 +189,9 @@ Kubernetes: `>=1.16.0-0`
 | hajimari.name              | string | `"You"`                              | Default name for welcome message                                                                  |
 | hajimari.namespaceSelector | object | `{"matchNames":["media"]}`           | Namespace selector to use for discovering applications                                            |
 | hajimari.title             | string | `nil`                                | Override the title of the Hajimari pages                                                          |
-| image.pullPolicy           | string | `"IfNotPresent"`                     | image pull policy                                                                                 |
-| image.repository           | string | `"ghcr.io/mahyarmirrashed/hajimari"` | image repository                                                                                  |
-| image.tag                  | string | `"v0.3.1"`                           | image tag                                                                                         |
+| image.pullPolicy           | string | `"IfNotPresent"`                     | Image pull policy                                                                                 |
+| image.repository           | string | `"ghcr.io/mahyarmirrashed/hajimari"` | Image repository                                                                                  |
+| image.tag                  | string | `"v0.3.1"`                           | Image tag                                                                                         |
 | ingress.main               | object | See values.yaml                      | Enable and configure ingress settings for the chart under this key.                               |
 | persistence                | object | See values.yaml                      | Configure persistence settings for the chart under this key.                                      |
 | service                    | object | See values.yaml                      | Configures service settings for the chart.                                                        |
