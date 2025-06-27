@@ -7,4 +7,5 @@ metadata:
   labels: {{- include "common.labels" . | nindent 4 }}
 data:
   config.yaml: |-
+
 {{ toYaml .Values.hajimari | indent 4 }}
